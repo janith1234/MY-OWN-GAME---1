@@ -74,73 +74,75 @@ function preload() {
   sword = loadImage("./images/sword.png");
   rock = loadImage("./images/rock.png");
   cactus = loadImage("./images/cactus.png");
-  boomerang = loadAnimation("./images/boomrang1.png","./images/boomrang2.png","./images/boomrang3.png","./images/boomrang4.png");
-  fire = loadAnimation("./images/fire1.png","./images/fire5.png","./images/fire2.png");
-  
+  boomerang = loadAnimation("./images/boomrang1.png", "./images/boomrang2.png", "./images/boomrang3.png", "./images/boomrang4.png");
+  fire = loadAnimation("./images/fire1.png", "./images/fire5.png", "./images/fire2.png");
+
 }
 function setup() {
-  canvas = createCanvas(displayWidth/2, displayHeight/2);
+  canvas = createCanvas(displayWidth / 2, displayHeight / 2);
 
-  backgroundSprite = createSprite(displayWidth/4,displayHeight/4)
+  backgroundSprite = createSprite(displayWidth / 4, displayHeight / 4)
   backgroundSprite.addImage(gameBackground1);
   backgroundSprite.velocityX = -3;
   backgroundSprite.depth = -1;
 
-  runner = createSprite(50,(displayHeight/2)-20,25,40);
+  runner = createSprite(50, (displayHeight / 2) - 20, 25, 40);
   runner.depth = 4;
-  runner.addAnimation('run',redrunningAnimation);
+  runner.addAnimation('run', redrunningAnimation);
+
   runner.scale = 1.5;
 
-  invisibleGround = createSprite(displayWidth/4,displayHeight/2,displayWidth/2,10);
+  invisibleGround = createSprite(displayWidth / 4, displayHeight / 2, displayWidth / 2, 10);
   invisibleGround.visible = false;
 
   cactusGroup = new Group();
+  
   fireGroup = new Group();
 }
 
 function draw() {
   background('white')
-  
+
   runner.velocityY = 2;
   console.log(backgroundSprite.x)
-  if(backgroundSprite.x <220){
-    backgroundSprite.x = displayWidth/4;
+  if (backgroundSprite.x < 220) {
+    backgroundSprite.x = displayWidth / 4;
   }
   runner.collide(invisibleGround);
   spawnFireBall();
   spawnCactus();
 
-  
+
   drawSprites();
-  text("score: "+score,displayWidth/4,20)
+  text("score: " + score, displayWidth / 4, 20)
 }
 
-function spawnCactus(){
+function spawnCactus() {
 
-  var pos = (Math.round(random(60,300)));
-  console.log("cac"+pos)
-  if(frameCount%pos=== 0){
-    cactusSprite = createSprite(displayWidth/2,displayHeight/2 - 30,10,50);
+  var pos = (Math.round(random(60, 300)));
+  console.log("cac" + pos)
+  if (frameCount % pos === 0) {
+    cactusSprite = createSprite(displayWidth / 2, displayHeight / 2 - 30, 10, 50);
     cactusSprite.addImage(cactus);
     cactusSprite.velocityX = -6
-    cactusSprite.scale = 0.04; 
+    cactusSprite.scale = 0.04;
     cactusGroup.add(cactusSprite);
   }
 }
 
-function spawnFireBall(){
-  var pos = (Math.round(random(60,300)));
-  console.log("fire"+pos);
-  if(frameCount%pos=== 0){
-    fireSprite = createSprite((Math.round(random(200,displayWidth/2))),10,10,50);
-    fireSprite.addAnimation("throw",fire);
-    firespeed = Math.round(random(3,9));
-    fireFall =  Math.round(random(3,9));
+function spawnFireBall() {
+  var pos = (Math.round(random(60, 300)));
+  console.log("fire" + pos);
+  if (frameCount % pos === 0) {
+    fireSprite = createSprite((Math.round(random(200, displayWidth / 2))), 10, 10, 50);
+    fireSprite.addAnimation("throw", fire);
+    firespeed = Math.round(random(3, 9));
+    fireFall = Math.round(random(3, 9));
     fireSprite.velocityX = -firespeed
     fireSprite.velocityY = fireFall;
-    fireSprite.scale = 0.01; 
-    console.log("firex"+fireSprite.y);
+    fireSprite.scale = 0.01;
+    console.log("firex" + fireSprite.y);
     fireGroup.add(fireSprite);
-    
-  } 
+
+  }
 }
