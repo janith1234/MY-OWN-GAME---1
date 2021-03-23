@@ -1,6 +1,5 @@
 var canvas, backgroundImage;
-
-var gameState = "serve";
+var gameState = "PLAY";
 var score = 0;
 
 function preload() {
@@ -76,7 +75,7 @@ function preload() {
   cactus = loadImage("./images/cactus.png");
   boomerang = loadAnimation("./images/boomrang1.png", "./images/boomrang2.png", "./images/boomrang3.png", "./images/boomrang4.png");
   fire = loadAnimation("./images/fire1.png", "./images/fire5.png", "./images/fire2.png");
-
+    gem= loadImage("./images/gem.png");
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
@@ -89,29 +88,47 @@ function setup() {
   runner = createSprite(50, (displayHeight / 2) - 20, 25, 40);
   runner.depth = 4;
   runner.addAnimation('run', redrunningAnimation);
-
   runner.scale = 1.5;
-
+  runner.setCollider("circle",5,12,2);
+  runner.debug = true;
   invisibleGround = createSprite(displayWidth / 4, displayHeight / 2, displayWidth / 2, 10);
   invisibleGround.visible = false;
 
   cactusGroup = new Group();
-  
   fireGroup = new Group();
 }
 
 function draw() {
   background('white')
+  if (gameState === "PLAY") {
+    runner.velocityY = 2;
+    console.log(backgroundSprite.x)
+    if (backgroundSprite.x < 220) {
+      backgroundSprite.x = displayWidth / 4;
+    }
 
-  runner.velocityY = 2;
-  console.log(backgroundSprite.x)
-  if (backgroundSprite.x < 220) {
-    backgroundSprite.x = displayWidth / 4;
+    runner.collide(invisibleGround);
+    spawnFireBall();
+
+    spawnCactus();
+    if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup)) {
+      runner.velocityX = 0
+      runner.velocityY = 0
+      fireGroup.setVelocityXEach(0);
+      fireGroup.setVelocityYEach(0);
+      cactusGroup.setVelocityXEach(0);
+      cactusGroup.setVelocityYEach(0);
+      backgroundSprite.velocityX = 0
+      gameState = "END"
+
+    }
+
+    if (keyDown("Space")) {
+      runner.velocityY = -3
+
+    }
+    runner.y = runner.y + 0.5
   }
-  runner.collide(invisibleGround);
-  spawnFireBall();
-  spawnCactus();
-
 
   drawSprites();
   text("score: " + score, displayWidth / 4, 20)
@@ -144,5 +161,6 @@ function spawnFireBall() {
     console.log("firex" + fireSprite.y);
     fireGroup.add(fireSprite);
 
+    
   }
 }
