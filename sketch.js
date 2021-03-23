@@ -70,12 +70,12 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/sounds/jump07.mp3"
   );
 
-  sword = loadImage("./images/sword.png");
-  rock = loadImage("./images/rock.png");
-  cactus = loadImage("./images/cactus.png");
-  boomerang = loadAnimation("./images/boomrang1.png", "./images/boomrang2.png", "./images/boomrang3.png", "./images/boomrang4.png");
-  fire = loadAnimation("./images/fire1.png", "./images/fire5.png", "./images/fire2.png");
-    gem= loadImage("./images/gem.png");
+  sword = loadImage("sword.png");
+  rock = loadImage("rock.png");
+  cactus = loadImage("cactus.png");
+  boomerang = loadAnimation("boomrang1.png", "boomrang2.png", "boomrang3.png", "boomrang4.png");
+  fire = loadAnimation("fire1.png", "fire5.png", "fire2.png");
+  gem = loadImage("gem.png");
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
@@ -89,7 +89,7 @@ function setup() {
   runner.depth = 4;
   runner.addAnimation('run', redrunningAnimation);
   runner.scale = 1.5;
-  runner.setCollider("circle",5,12,2);
+  runner.setCollider("circle", 5, 12, 2);
   runner.debug = true;
   invisibleGround = createSprite(displayWidth / 4, displayHeight / 2, displayWidth / 2, 10);
   invisibleGround.visible = false;
@@ -108,6 +108,9 @@ function draw() {
     }
 
     runner.collide(invisibleGround);
+    if (keyDown('b')) {
+      spawnBoomrang();
+    }
     spawnFireBall();
 
     spawnCactus();
@@ -161,6 +164,13 @@ function spawnFireBall() {
     console.log("firex" + fireSprite.y);
     fireGroup.add(fireSprite);
 
-    
+     
   }
+}
+function spawnBoomrang(){
+  var posX = runner.x
+  var posY =runner.y
+   var boomrang1=createSprite(posX,posY,10,10)
+   boomrang1.addAnimation("flying",boomerang);
+  boomrang1.velocityX=2
 }
