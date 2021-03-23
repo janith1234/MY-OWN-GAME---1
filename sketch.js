@@ -15,6 +15,7 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump08.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump09.png"
   );
+  thootless=loadAnimation('0.gif','1.gif','2.gif','3.gif','4.gif','5.gif','6.gif','7.gif','8.gif','9.gif','10.gif','11.gif')
   redrunningAnimation = loadAnimation(
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run00.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run01.png",
@@ -96,6 +97,7 @@ function setup() {
 
   cactusGroup = new Group();
   fireGroup = new Group();
+  boomrang1Group = new Group();
 }
 
 function draw() {
@@ -126,13 +128,17 @@ function draw() {
 
     }
 
+   if(boomrang1Group.isTouching(fireGroup)){
+   fireGroup.destroyEach();
+   }
+
     if (keyDown("Space")) {
       runner.velocityY = -3
 
     }
     runner.y = runner.y + 0.5
   }
-
+  
   drawSprites();
   text("score: " + score, displayWidth / 4, 20)
 }
@@ -173,4 +179,6 @@ function spawnBoomrang(){
    var boomrang1=createSprite(posX,posY,10,10)
    boomrang1.addAnimation("flying",boomerang);
   boomrang1.velocityX=2
+  boomrang1.scale=0.04
+  boomrang1Group.add(boomrang1);
 }
