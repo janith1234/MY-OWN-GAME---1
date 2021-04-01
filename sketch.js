@@ -15,7 +15,7 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump08.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump09.png"
   );
-  thootless=loadAnimation('0.gif','1.gif','2.gif','3.gif','4.gif','5.gif','6.gif','7.gif','8.gif','9.gif','10.gif','11.gif')
+  thootless = loadAnimation('0.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', '7.gif', '8.gif', '9.gif', '10.gif', '11.gif')
   redrunningAnimation = loadAnimation(
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run00.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run01.png",
@@ -114,6 +114,7 @@ function draw() {
       spawnBoomrang();
     }
     spawnFireBall();
+    spawnClouds();
 
     spawnCactus();
     if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup)) {
@@ -128,9 +129,9 @@ function draw() {
 
     }
 
-   if(boomrang1Group.isTouching(fireGroup)){
-   fireGroup.destroyEach();
-   }
+    if (boomrang1Group.isTouching(fireGroup)) {
+      fireGroup.destroyEach();
+    }
 
     if (keyDown("Space")) {
       runner.velocityY = -3
@@ -138,7 +139,7 @@ function draw() {
     }
     runner.y = runner.y + 0.5
   }
-  
+
   drawSprites();
   text("score: " + score, displayWidth / 4, 20)
 }
@@ -170,15 +171,33 @@ function spawnFireBall() {
     console.log("firex" + fireSprite.y);
     fireGroup.add(fireSprite);
 
-     
+
   }
 }
-function spawnBoomrang(){
+function spawnBoomrang() {
   var posX = runner.x
-  var posY =runner.y
-   var boomrang1=createSprite(posX,posY,10,10)
-   boomrang1.addAnimation("flying",boomerang);
-  boomrang1.velocityX=2
-  boomrang1.scale=0.04
+  var posY = runner.y
+  var boomrang1 = createSprite(posX, posY, 10, 10)
+  boomrang1.addAnimation("flying", boomerang);
+  boomrang1.velocityX = 2
+  boomrang1.scale = 0.04
   boomrang1Group.add(boomrang1);
+}
+
+function spawnClouds() {
+  //write code here to spawn the clouds
+  if (frameCount % 60 === 0) {
+    cloud = createSprite(600, 100, 40, 10);
+    cloud.y = Math.round(random(10, 60));
+    cloud.addImage(cloudImage);
+    cloud.scale = 1;
+    cloud.velocityX = -2;
+
+    //adjust the depth
+    cloud.depth = runner.depth;
+
+    //adding cloud to the group
+    cloudsGroup.add(thootless);
+  }
+
 }
