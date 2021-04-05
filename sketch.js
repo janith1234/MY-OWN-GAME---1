@@ -15,7 +15,7 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump08.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/jump09.png"
   );
-  thootless = loadAnimation('0.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', '7.gif', '8.gif', '9.gif', '10.gif', '11.gif')
+  thootless1 = loadAnimation('0.gif', '1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', '7.gif', '8.gif', '9.gif', '10.gif', '11.gif')
   redrunningAnimation = loadAnimation(
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run00.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/redNinja/run01.png",
@@ -98,6 +98,7 @@ function setup() {
   cactusGroup = new Group();
   fireGroup = new Group();
   boomrang1Group = new Group();
+  cloudsGroup=new Group();
 }
 
 function draw() {
@@ -117,14 +118,17 @@ function draw() {
     spawnClouds();
 
     spawnCactus();
-    if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup)) {
+    if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup)|| runner.isTouching(cloudsGroup)) {
       runner.velocityX = 0
       runner.velocityY = 0
       fireGroup.setVelocityXEach(0);
       fireGroup.setVelocityYEach(0);
       cactusGroup.setVelocityXEach(0);
       cactusGroup.setVelocityYEach(0);
-      thootlessGroup.setVelocityYEach(0);
+     cloudsGroup.setVelocityYEach(0);
+     cloudsGroup.setVelocityXEach(0);
+     boomrang1Group.setVelocityXEach(0);
+     boomrang1Group.setVelocityYEach(0);
       backgroundSprite.velocityX = 0
       gameState = "END"
 
@@ -143,9 +147,10 @@ function draw() {
   function spawnClouds() {
     if (frameCount % 60 === 0) {
       thootless = createSprite(600, 100, 40, 10);
-      thootless.y = Math.round(random(10, 60));
-      cloudsGroup.add(thootlessSprite);
-      thootless.scale = 0.3;
+      thootless.y = Math.round(random(10, 200));
+      cloudsGroup.add(thootless);
+      thootless.addAnimation("flying",thootless1)
+      thootless.scale = 0.2;
       thootless.velocityX = -2;
       thootless.depth = runner.depth;
       
