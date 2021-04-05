@@ -40,7 +40,7 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/jump08.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/jump09.png"
   );
-  bg2=loadImage("higame.jpg");
+  bg2 = loadImage("higame.jpg");
   purplerunningAnimation = loadAnimation(
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/run00.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/run01.png",
@@ -84,7 +84,7 @@ function setup() {
 
   backgroundSprite = createSprite(displayWidth / 4, displayHeight / 4)
   backgroundSprite.addImage(bg2);
-  backgroundSprite.scale=2.8
+  backgroundSprite.scale = 2.8
   backgroundSprite.velocityX = -3;
   backgroundSprite.depth = -1;
 
@@ -100,7 +100,7 @@ function setup() {
   cactusGroup = new Group();
   fireGroup = new Group();
   boomrang1Group = new Group();
-  cloudsGroup=new Group();
+  cloudsGroup = new Group();
 }
 
 function draw() {
@@ -120,24 +120,38 @@ function draw() {
     spawnClouds();
 
     spawnCactus();
-    if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup)|| runner.isTouching(cloudsGroup)) {
-      runner.velocityX = 0
-      runner.velocityY = 0
-      fireGroup.setVelocityXEach(0);
-      fireGroup.setVelocityYEach(0);
-      cactusGroup.setVelocityXEach(0);
-      cactusGroup.setVelocityYEach(0);
-     cloudsGroup.setVelocityYEach(0);
-     cloudsGroup.setVelocityXEach(0);
-     boomrang1Group.setVelocityXEach(0);
-     boomrang1Group.setVelocityYEach(0);
-      backgroundSprite.velocityX = 0
-      gameState = "END"
+    if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup) || runner.isTouching(cloudsGroup)) {
+      if (runner.scale > 2) {
+        runner.scale = runner.scale - 0.1
+      }
+      else {
+        runner.velocityX = 0
+        runner.velocityY = 0
+        fireGroup.setVelocityXEach(0);
+        fireGroup.setVelocityYEach(0);
+        cactusGroup.setVelocityXEach(0);
+        cactusGroup.setVelocityYEach(0);
+        cloudsGroup.setVelocityYEach(0);
+        cloudsGroup.setVelocityXEach(0);
+        boomrang1Group.setVelocityXEach(0);
+        boomrang1Group.setVelocityYEach(0);
+        backgroundSprite.velocityX = 0
+        gameState = "END"
+
+      }
 
     }
 
     if (boomrang1Group.isTouching(fireGroup)) {
       fireGroup.destroyEach();
+      score = score + 1
+    }
+    if (score % 10 === 0 && score > 0) {
+      runner.scale = runner.scale + 0.01
+    }
+    if (boomrang1Group.isTouching(cloudsGroup)) {
+      cloudsGroup.destroyEach();
+      score = score + 1
     }
 
     if (keyDown("Space")) {
@@ -151,13 +165,13 @@ function draw() {
       thootless = createSprite(600, 100, 40, 10);
       thootless.y = Math.round(random(10, 200));
       cloudsGroup.add(thootless);
-      thootless.addAnimation("flying",thootless1)
+      thootless.addAnimation("flying", thootless1)
       thootless.scale = 0.2;
       thootless.velocityX = -2;
       thootless.depth = runner.depth;
-      
+
     }
-  
+
   }
   drawSprites();
   text("score: " + score, displayWidth / 4, 20)
