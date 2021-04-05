@@ -40,6 +40,7 @@ function preload() {
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/jump08.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/jump09.png"
   );
+  bg2=loadImage("higame.jpg");
   purplerunningAnimation = loadAnimation(
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/run00.png",
     "https://la-wit.github.io/build-an-infinite-runner/build/images/sprites/purpleNinja/run01.png",
@@ -82,7 +83,8 @@ function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
 
   backgroundSprite = createSprite(displayWidth / 4, displayHeight / 4)
-  backgroundSprite.addImage(gameBackground1);
+  backgroundSprite.addImage(bg2);
+  backgroundSprite.scale=2.8
   backgroundSprite.velocityX = -3;
   backgroundSprite.depth = -1;
 
