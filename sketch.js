@@ -81,10 +81,19 @@ function preload() {
   fruit1 = loadImage("fruit1.png")
   fruit2 = loadImage("fruit2.png")
   fruit3 = loadImage("fruit3.gif")
+  winner1 = loadImage("winner.png")
+  over = loadImage("game over.png")
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
-
+  winner = createSprite(displayWidth / 4, displayHeight / 4)
+  winner.addImage(winner1)
+  winner.visible = false
+  winner.scale = 0.2
+  over1 = createSprite(displayWidth / 4, displayHeight / 4)
+  over1.addImage(over)
+  over1.visible = false
+  over1.scale = 0.15
   backgroundSprite = createSprite(displayWidth / 4, displayHeight / 4)
   backgroundSprite.addImage(bg2);
   backgroundSprite.scale = 2.8
@@ -129,6 +138,7 @@ function draw() {
         runner.scale = runner.scale - 0.1
       }
       else {
+        over1.visible = true
         runner.velocityX = 0
         runner.velocityY = 0
         fireGroup.setVelocityXEach(0);
@@ -143,7 +153,7 @@ function draw() {
         gameState = "END"
 
       }
-      
+
     }
 
     if (boomrang1Group.isTouching(fireGroup)) {
@@ -156,6 +166,22 @@ function draw() {
     if (boomrang1Group.isTouching(cloudsGroup)) {
       cloudsGroup.destroyEach();
       score = score + 1
+    }
+
+    if (score > 10) {
+      runner.velocityX = 0
+      runner.velocityY = 0
+      fireGroup.setVelocityXEach(0);
+      fireGroup.setVelocityYEach(0);
+      cactusGroup.setVelocityXEach(0);
+      cactusGroup.setVelocityYEach(0);
+      cloudsGroup.setVelocityYEach(0);
+      cloudsGroup.setVelocityXEach(0);
+      boomrang1Group.setVelocityXEach(0);
+      fruit1Group.setVelocityYEach(0);
+      backgroundSprite.velocityX = 0
+      gameState = "END"
+      winner.visible = true
     }
 
     if (keyDown("Space")) {
@@ -179,24 +205,24 @@ function draw() {
   }
 
   function spawnFruit1() {
-    frame=Math.round(random(150, 250));
+    frame = Math.round(random(150, 250));
     if (frameCount % frame === 0) {
       Fruit1 = createSprite(600, 100, 40, 10);
       Fruit1.y = Math.round(random(80, 200));
-      random1= Math.round(random(1, 3));
+      random1 = Math.round(random(1, 3));
       fruit1Group.add(Fruit1);
-      switch(random1){
-        case 1:Fruit1.addImage(fruit1)
-        Fruit1.scale = 0.02;
-        break 
-        case 2:Fruit1.addImage(fruit2)
-        Fruit1.scale = 0.03;
-        break 
-        case 3:Fruit1.addImage(fruit3)
-        Fruit1.scale = 0.05;
-        break 
+      switch (random1) {
+        case 1: Fruit1.addImage(fruit1)
+          Fruit1.scale = 0.02;
+          break
+        case 2: Fruit1.addImage(fruit2)
+          Fruit1.scale = 0.03;
+          break
+        case 3: Fruit1.addImage(fruit3)
+          Fruit1.scale = 0.05;
+          break
       }
-      
+
       Fruit1.velocityX = -2;
       Fruit1.depth = runner.depth;
 
