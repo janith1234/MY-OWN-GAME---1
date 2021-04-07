@@ -79,7 +79,8 @@ function preload() {
   fire = loadAnimation("fire1.png", "fire5.png", "fire2.png");
   gem = loadImage("gem.png");
   fruit1 = loadImage("fruit1.png")
-  fruit2 = loadImage("fruit2.jpg")
+  fruit2 = loadImage("fruit2.png")
+  fruit3 = loadImage("fruit3.gif")
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
@@ -178,13 +179,24 @@ function draw() {
   }
 
   function spawnFruit1() {
-    if (frameCount % 60 === 0) {
+    frame=Math.round(random(150, 250));
+    if (frameCount % frame === 0) {
       Fruit1 = createSprite(600, 100, 40, 10);
       Fruit1.y = Math.round(random(80, 200));
-      random= Math.round(random(1, 3));
+      random1= Math.round(random(1, 3));
       fruit1Group.add(Fruit1);
-      Fruit1.addImage(fruit1)
-      Fruit1.scale = 0.02;
+      switch(random1){
+        case 1:Fruit1.addImage(fruit1)
+        Fruit1.scale = 0.02;
+        break 
+        case 2:Fruit1.addImage(fruit2)
+        Fruit1.scale = 0.03;
+        break 
+        case 3:Fruit1.addImage(fruit3)
+        Fruit1.scale = 0.05;
+        break 
+      }
+      
       Fruit1.velocityX = -2;
       Fruit1.depth = runner.depth;
 
