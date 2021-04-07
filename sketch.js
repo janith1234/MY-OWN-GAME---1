@@ -78,7 +78,8 @@ function preload() {
   boomerang = loadAnimation("boomrang1.png", "boomrang2.png", "boomrang3.png", "boomrang4.png");
   fire = loadAnimation("fire1.png", "fire5.png", "fire2.png");
   gem = loadImage("gem.png");
-  fruit1 = loadImage("fruit1.jpg")
+  fruit1 = loadImage("fruit1.png")
+  fruit2 = loadImage("fruit2.jpg")
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
@@ -179,10 +180,11 @@ function draw() {
   function spawnFruit1() {
     if (frameCount % 60 === 0) {
       Fruit1 = createSprite(600, 100, 40, 10);
-      Fruit1.y = Math.round(random(10, 200));
+      Fruit1.y = Math.round(random(80, 200));
+      random= Math.round(random(1, 3));
       fruit1Group.add(Fruit1);
       Fruit1.addImage(fruit1)
-      Fruit1.scale = 1;
+      Fruit1.scale = 0.02;
       Fruit1.velocityX = -2;
       Fruit1.depth = runner.depth;
 
