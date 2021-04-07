@@ -78,6 +78,7 @@ function preload() {
   boomerang = loadAnimation("boomrang1.png", "boomrang2.png", "boomrang3.png", "boomrang4.png");
   fire = loadAnimation("fire1.png", "fire5.png", "fire2.png");
   gem = loadImage("gem.png");
+  fruit1 = loadImage("fruit1.jpg")
 }
 function setup() {
   canvas = createCanvas(displayWidth / 2, displayHeight / 2);
@@ -101,6 +102,7 @@ function setup() {
   fireGroup = new Group();
   boomrang1Group = new Group();
   cloudsGroup = new Group();
+  fruit1Group = new Group();
 }
 
 function draw() {
@@ -118,7 +120,7 @@ function draw() {
     }
     spawnFireBall();
     spawnClouds();
-
+    spawnFruit1();
     spawnCactus();
     if (runner.isTouching(cactusGroup) || runner.isTouching(fireGroup) || runner.isTouching(cloudsGroup)) {
       if (runner.scale > 2) {
@@ -134,12 +136,12 @@ function draw() {
         cloudsGroup.setVelocityYEach(0);
         cloudsGroup.setVelocityXEach(0);
         boomrang1Group.setVelocityXEach(0);
-        boomrang1Group.setVelocityYEach(0);
+        fruit1Group.setVelocityYEach(0);
         backgroundSprite.velocityX = 0
         gameState = "END"
 
       }
-
+      
     }
 
     if (boomrang1Group.isTouching(fireGroup)) {
@@ -169,6 +171,20 @@ function draw() {
       thootless.scale = 0.2;
       thootless.velocityX = -2;
       thootless.depth = runner.depth;
+
+    }
+
+  }
+
+  function spawnFruit1() {
+    if (frameCount % 60 === 0) {
+      Fruit1 = createSprite(600, 100, 40, 10);
+      Fruit1.y = Math.round(random(10, 200));
+      fruit1Group.add(Fruit1);
+      Fruit1.addImage(fruit1)
+      Fruit1.scale = 1;
+      Fruit1.velocityX = -2;
+      Fruit1.depth = runner.depth;
 
     }
 
