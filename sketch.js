@@ -138,6 +138,7 @@ function draw() {
         runner.scale = runner.scale - 0.1
       }
       else {
+        gameOverMusic.play();
         over1.visible = true
         runner.velocityX = 0
         runner.velocityY = 0
@@ -186,7 +187,7 @@ function draw() {
 
     if (keyDown("Space")) {
       runner.velocityY = -3
-
+      jumpSound.play();
     }
     runner.y = runner.y + 0.5
   }
