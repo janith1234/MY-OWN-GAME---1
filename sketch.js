@@ -186,7 +186,7 @@ function draw() {
     }
 
     if (keyDown("Space")) {
-      runner.velocityY = -3
+      runner.velocityY = -10
       jumpSound.play();
     }
     runner.y = runner.y + 0.5
