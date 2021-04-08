@@ -1,6 +1,7 @@
 var canvas, backgroundImage;
 var gameState = "PLAY";
 var score = 0;
+var food = 0;
 
 function preload() {
   redjumpingAnimation = loadAnimation(
@@ -169,6 +170,17 @@ function draw() {
       score = score + 1
     }
 
+
+    if (runner.isTouching(fruit1Group)) {
+      fruit1Group.destroyEach();
+      food = food + 1
+    }
+    if (food % 10 === 0 && food > 0) {
+      runner.scale = runner.scale + 0.01
+    }
+     
+    
+
     if (score > 10) {
       runner.velocityX = 0
       runner.velocityY = 0
@@ -232,6 +244,7 @@ function draw() {
   }
   drawSprites();
   text("score: " + score, displayWidth / 4, 20)
+  text("food: " + food, displayWidth / 4.7, 20)
 }
 
 function spawnCactus() {
