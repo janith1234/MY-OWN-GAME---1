@@ -105,8 +105,6 @@ function setup() {
   runner.depth = 4;
   runner.addAnimation('run', redrunningAnimation);
   runner.scale = 1.5;
-  runner.setCollider("circle", 5, 12, 2);
-  runner.debug = true;
   invisibleGround = createSprite(displayWidth / 4, displayHeight / 2, displayWidth / 2, 10);
   invisibleGround.visible = false;
 
@@ -182,6 +180,22 @@ function draw() {
     
 
     if (score > 10) {
+      runner.velocityX = 0
+      runner.velocityY = 0
+      fireGroup.setVelocityXEach(0);
+      fireGroup.setVelocityYEach(0);
+      cactusGroup.setVelocityXEach(0);
+      cactusGroup.setVelocityYEach(0);
+      cloudsGroup.setVelocityYEach(0);
+      cloudsGroup.setVelocityXEach(0);
+      boomrang1Group.setVelocityXEach(0);
+      fruit1Group.setVelocityYEach(0);
+      backgroundSprite.velocityX = 0
+      gameState = "END"
+      winner.visible = true
+    }
+
+    else if (food > 10) {
       runner.velocityX = 0
       runner.velocityY = 0
       fireGroup.setVelocityXEach(0);
